@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduFund Portal — Demo</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:#f4f7f9;color:#17202a}
+button,input,select{font:inherit}
+.demo{background:#a90000;color:#fff;text-align:center;padding:10px;font-size:12px;font-weight:800;letter-spacing:.3px}
+.login-wrap{min-height:calc(100vh - 37px);display:flex;align-items:center;justify-content:center;padding:30px}
+.login-card{width:100%;max-width:430px;background:#fff;border-radius:18px;padding:34px;box-shadow:0 10px 35px rgba(0,0,0,.10)}
+.logo{width:52px;height:52px;border-radius:12px;background:#087f3f;color:#fff;display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:800;margin-bottom:18px}
+h1{margin:0 0 8px;font-size:28px}
+.muted{color:#687280}
+label{display:block;font-weight:700;margin:20px 0 8px}
+input,select{width:100%;padding:14px;border:1px solid #d5dce3;border-radius:9px;background:#fff;outline:none}
+input:focus{border-color:#087f3f}
+.btn{border:0;border-radius:9px;padding:13px 18px;font-weight:800;cursor:pointer}
+.primary{background:#087f3f;color:#fff}
+.full{width:100%;margin-top:24px}
+.note{margin-top:18px;background:#eef8f2;border-left:4px solid #087f3f;padding:12px;font-size:13px}
+.error{color:#b00020;font-size:13px;margin-top:8px;display:none}
+.app{display:none}
+.top{height:74px;background:#fff;border-bottom:1px solid #dfe5ea;display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:18px}
+.brand .logo{width:42px;height:42px;margin:0;font-size:20px}
+.user{display:flex;align-items:center;gap:10px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#e1f2e8;color:#087f3f;display:flex;align-items:center;justify-content:center;font-weight:800}
+.layout{display:flex;min-height:calc(100vh - 111px)}
+aside{width:235px;background:#075332;color:#dceee5;padding:25px 14px}
+nav button{width:100%;background:transparent;color:#dceee5;border:0;text-align:left;padding:14px;border-radius:10px;margin-bottom:6px;font-weight:700;cursor:pointer}
+nav button.active,nav button:hover{background:#087f3f;color:#fff}
+main{flex:1;padding:55px;max-width:1200px;margin:auto;width:100%}
+.page{display:none}.page.active{display:block}
+h2{font-size:32px;margin:0 0 8px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:28px 0}
+.card{background:#fff;border:1px solid #e4e9ed;border-radius:14px;padding:20px;box-shadow:0 3px 12px rgba(0,0,0,.04)}
+.stat{font-size:22px;font-weight:800;margin-top:12px}
+.green{color:#087f3f}
+.form-card{max-width:760px}
+.success{background:#eef8f2;border-left:4px solid #087f3f;padding:15px;margin:20px 0}
+@media(max-width:800px){
+aside{width:80px;padding:18px 8px}nav button{font-size:0;text-align:center}nav button:first-letter{font-size:20px}
+main{padding:30px 20px}.grid{grid-template-columns:1fr 1fr}.top{padding:0 15px}
+}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.login-wrap{padding:18px}}
+</style>
+</head>
+<body>
+
+<div class="demo">DEMO PROTOTYPE — NOT A GOVERNMENT WEBSITE</div>
+
+<section id="loginScreen" class="login-wrap">
+  <div class="login-card">
+    <div class="logo">E</div>
+    <h1>EduFund Portal</h1>
+    <p class="muted">Student funding portal demo</p>
+
+    <label for="loginId">Student ID or Email</label>
+    <input id="loginId" type="text" placeholder="e.g. STU-2026-00124">
+
+    <label for="password">Password</label>
+    <input id="password" type="password" placeholder="Enter password">
+
+    <div id="loginError" class="error">Please enter your Student ID/email and password.</div>
+    <button class="btn primary full" onclick="login()">Log in</button>
+
+    <div class="note">
+      <strong>Demo access:</strong><br>
+      You can enter any Student ID/email and any password to preview the portal.
+    </div>
+  </div>
+</section>
+
+<section id="portal" class="app">
+  <header class="top">
+    <div class="brand"><div class="logo">E</div><span>EduFund Portal</span></div>
+    <div class="user"><span id="displayName">Daniel Daviz</span><div class="avatar">DD</div></div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <nav>
+        <button class="active" onclick="showPage('dashboard',this)">▦ Dashboard</button>
+        <button onclick="showPage('apply',this)">＋ Apply for Funding</button>
+        <button onclick="showPage('status',this)">◷ Application Status</button>
+        <button onclick="showPage('profile',this)">◎ Profile</button>
+        <button onclick="showPage('notifications',this)">◇ Notifications</button>
+        <button onclick="logout()">↪ Log out</button>
+      </nav>
+    </aside>
+
+    <main>
+      <section id="dashboard" class="page active">
+        <h2>Welcome back, Daniel</h2>
+        <p class="muted">Overview of your student funding application.</p>
+
+        <div class="grid">
+          <div class="card"><div class="muted">Application status</div><div class="stat green">Submitted</div></div>
+          <div class="card"><div class="muted">Requested amount</div><div class="stat">₦450,000</div></div>
+          <div class="card"><div class="muted">Institution</div><div class="stat">University</div></div>
+          <div class="card"><div class="muted">Documents</div><div class="stat">3/3</div></div>
+        </div>
+
+        <div class="card">
+          <h2 style="font-size:24px">Funding application</h2>
+          <p class="muted">Your demo application has been received for review.</p>
+          <div class="success"><strong>Next step:</strong> Keep your student information and supporting documents available.</div>
+          <button class="btn primary" onclick="showPage('status',document.querySelectorAll('nav button')[2])">View application status</button>
+        </div>
+      </section>
+
+      <section id="apply" class="page">
+        <h2>Apply for Funding</h2>
+        <p class="muted">Complete the demo funding application.</p>
+        <div class="card form-card">
+          <label>Full name</label><input id="fullName" value="Daniel Daviz">
+          <label>Student ID</label><input value="STU-2026-00124">
+          <label>Institution</label><input placeholder="Enter institution">
+          <label>Programme</label><input placeholder="Enter programme">
+          <label>Study level</label>
+          <select><option>Undergraduate</option><option>Postgraduate</option><option>PhD</option></select>
+          <label>Requested amount</label><input type="number" placeholder="₦">
+          <button class="btn primary full" onclick="submitApplication()">Submit application</button>
+        </div>
+      </section>
+
+      <section id="status" class="page">
+        <h2>Application Status</h2>
+        <p class="muted">Track your demo application.</p>
+        <div class="card">
+          <div class="success"><strong>Submitted</strong><br>Your application has been received and is awaiting review.</div>
+          <p><strong>Application ID:</strong> EDU-2026-00124</p>
+          <p><strong>Submitted:</strong> 26 September 2026</p>
+          <p><strong>Documents:</strong> 3/3 received</p>
+        </div>
+      </section>
+
+      <section id="profile" class="page">
+        <h2>Profile</h2>
+        <p class="muted">Your student profile.</p>
+        <div class="card form-card">
+          <label>Full name</label><input value="Daniel Daviz">
+          <label>Student ID</label><input value="STU-2026-00124">
+          <label>Email</label><input value="student@example.com">
+          <button class="btn primary full" onclick="alert('Demo profile saved.')">Save changes</button>
+        </div>
+      </section>
+
+      <section id="notifications" class="page">
+        <h2>Notifications</h2>
+        <p class="muted">Your latest portal notifications.</p>
+        <div class="card">
+          <p><strong>Application received</strong></p>
+          <p class="muted">Your demo funding application has been successfully submitted.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+</section>
+
+<script>
+function login(){
+  const id=document.getElementById('loginId').value.trim();
+  const pw=document.getElementById('password').value.trim();
+  const err=document.getElementById('loginError');
+  if(!id||!pw){err.style.display='block';return}
+  err.style.display='none';
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('portal').style.display='block';
+  document.getElementById('displayName').textContent=id.includes('@')?'Student':'Daniel Daviz';
+}
+function logout(){
+  document.getElementById('portal').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('loginId').value='';
+  document.getElementById('password').value='';
+}
+function showPage(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+}
+function submitApplication(){
+  alert('Demo application submitted successfully.');
+  showPage('status',document.querySelectorAll('nav button')[2]);
+}
+</script>
+</body>
+</html>
